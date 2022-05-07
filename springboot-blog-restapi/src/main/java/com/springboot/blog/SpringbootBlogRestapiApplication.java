@@ -8,8 +8,6 @@ public class SpringbootBlogRestapiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootBlogRestapiApplication.class, args);
-		System.out.println("test");
-
-	}
+		}
 
 }
