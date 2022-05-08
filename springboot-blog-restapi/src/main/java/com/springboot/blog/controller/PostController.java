@@ -13,7 +13,6 @@ import java.util.List;
 public class PostController {
 
     private PostService postService;
-
     public PostController(PostService postService) {
         this.postService = postService;
     }
@@ -43,6 +42,13 @@ public class PostController {
         PostDto postResponse = postService.updatePost(postDto,id);
 
         return new ResponseEntity(postResponse, HttpStatus.OK);
+    }
+
+    //delete post by id
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePopst(@PathVariable(name = "id") long id){
+        postService.deletePostById(id);
+        return new ResponseEntity<>("Post entity deleted successfully.",HttpStatus.OK);
     }
 
 }
