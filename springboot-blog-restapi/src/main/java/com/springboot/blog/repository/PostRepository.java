@@ -1,4 +1,4 @@
-package com.springboot.blog.payload;
+package com.springboot.blog.repository;
 
 import com.springboot.blog.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
