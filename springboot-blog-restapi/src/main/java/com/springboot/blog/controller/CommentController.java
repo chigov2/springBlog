@@ -1,5 +1,6 @@
 package com.springboot.blog.controller;
 
+import com.springboot.blog.entity.Comment;
 import com.springboot.blog.payload.CommentDto;
 import com.springboot.blog.service.CommentService;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,14 @@ public class CommentController {
     public List<CommentDto> getCommentsByPostId(@PathVariable(value = "postId") long postId){
 
         return commentService.getCommentByPostId(postId);
+    }
+
+    @GetMapping("/posts/{postId}/comments/{id}")
+    ResponseEntity<CommentDto> getCommentById(
+            @PathVariable(value = "postId") Long postId,
+            @PathVariable(value = "id") Long commentId){
+
+        CommentDto commentDto = commentService.getCommentById(postId, commentId);
+        return new ResponseEntity<>(commentDto,HttpStatus.OK);
     }
 }
