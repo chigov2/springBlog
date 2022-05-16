@@ -1,8 +1,10 @@
 package com.springboot.blog.config;
 
+import com.springboot.blog.security.CustomUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +20,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private CustomUserDetailService userDetailService;
 
     @Bean
     PasswordEncoder passwordEncoder(){
@@ -37,10 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails mikee = User.builder().username("mikee").password(passwordEncoder().encode("158500")).roles("USER").build();
-        UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("138500")).roles("ADMIN").build();
-        return new InMemoryUserDetailsManager(mikee,admin);
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
+
+    //    @Override
+//    @Bean
+//    protected UserDetailsService userDetailsService() {
+//        UserDetails mikee = User.builder().username("mikee").password(passwordEncoder().encode("158500")).roles("USER").build();
+//        UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("138500")).roles("ADMIN").build();
+//        return new InMemoryUserDetailsManager(mikee,admin);
+//    }
 }
