@@ -8,7 +8,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users",uniqueConstraints ={
-@UniqueConstraint(columnNames = "userName"),
+@UniqueConstraint(columnNames = "username"),
 @UniqueConstraint(columnNames = "email")})
 
 public class User {
@@ -18,7 +18,7 @@ public class User {
     //primary key - become a forieng key for user_roles table
     private long id;
     private String name;
-    private String userName;
+    private String username;
     private String email;
     private String password;
 
