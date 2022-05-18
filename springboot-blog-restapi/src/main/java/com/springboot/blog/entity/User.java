@@ -15,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //primary key - become a forieng key for user_roles table
+    //primary key - become a foreign key for user_roles table
     private long id;
     private String name;
     private String username;
