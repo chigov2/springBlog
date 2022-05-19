@@ -1,7 +1,6 @@
 package com.springboot.blog.controller;
 
 import com.springboot.blog.payload.PostDto;
-import com.springboot.blog.payload.PostDtoV2;
 import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.utils.ApiConstants;
@@ -43,29 +42,31 @@ public class PostController {
 
     //get post by id
     //@GetMapping(value = "/api/posts/{id}",params = "version=1")
-    @GetMapping(value = "/api/posts/{id}",headers = "version=1")
+    //@GetMapping(value = "/api/posts/{id}",headers = "X-API-VERSION=1")
+    @GetMapping(value = "/api/V1/posts/{id}")
     public ResponseEntity<PostDto> getPostByIdV1(@PathVariable(name = "id") long id){
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
     //get post by id
     //@GetMapping(value = "/api/posts/{id}",params = "version=2")
-    @GetMapping(value = "/api/posts/{id}",headers = "version=2")
-    public ResponseEntity<PostDtoV2> getPostByIdV2(@PathVariable(name = "id") long id){
-        PostDto postDto = postService.getPostById(id);
-        PostDtoV2 postDtoV2 = new PostDtoV2();
-        postDtoV2.setId(postDto.getId());
-        postDtoV2.setTitle(postDto.getTitle());
-        postDtoV2.setDescription(postDto.getDescription());
-        postDtoV2.setContent(postDto.getContent());
-        List<String> tags = new ArrayList<>();
-        tags.add("Java");
-        tags.add("Spring Boot");
-        tags.add("AWS");
-        postDtoV2.setTags(tags);
-
-        return ResponseEntity.ok(postDtoV2);
-    }
+    //@GetMapping(value = "/api/posts/{id}",headers = "X-API-VERSION=2")
+//    @GetMapping(value = "/api/posts/{id}",produces = "application/vnd.javaguides.v2+json")
+//    public ResponseEntity<PostDtoV2> getPostByIdV2(@PathVariable(name = "id") long id){
+//        PostDto postDto = postService.getPostById(id);
+//        PostDtoV2 postDtoV2 = new PostDtoV2();
+//        postDtoV2.setId(postDto.getId());
+//        postDtoV2.setTitle(postDto.getTitle());
+//        postDtoV2.setDescription(postDto.getDescription());
+//        postDtoV2.setContent(postDto.getContent());
+//        List<String> tags = new ArrayList<>();
+//        tags.add("Java");
+//        tags.add("Spring Boot");
+//        tags.add("AWS");
+//        postDtoV2.setTags(tags);
+//
+//        return ResponseEntity.ok(postDtoV2);
+//    }
 
     @PreAuthorize("hasRole('ADMIN')")
     //update post by id rest api
