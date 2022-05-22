@@ -4,6 +4,8 @@ import com.springboot.blog.payload.PostDto;
 import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.utils.ApiConstants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@Api(value = "CRUD REST APIs for post resources")
 @RestController
 @RequestMapping()
 public class PostController {
@@ -22,6 +25,7 @@ public class PostController {
         this.postService = postService;
     }
 
+    @ApiOperation(value = "Create Post REST API")
     @PreAuthorize("hasRole('ADMIN')")
     //create post REST API
     @PostMapping("/api/V1/posts")//important!!!!!!!!!!!!!!!!!!
@@ -30,6 +34,7 @@ public class PostController {
     }
 
     //get all posts rest api
+    @ApiOperation(value = "Get all posts REST API")
     @GetMapping("/api/V1/posts")
     public PostResponse getAllPosts(
           @RequestParam(value = "pageNo", defaultValue = ApiConstants.DEFAULT_PAGE_NUMBER,required = false) int pageNo,
@@ -43,6 +48,7 @@ public class PostController {
     //get post by id
     //@GetMapping(value = "/api/posts/{id}",params = "version=1")
     //@GetMapping(value = "/api/posts/{id}",headers = "X-API-VERSION=1")
+    @ApiOperation(value = "Get post by ID REST API")
     @GetMapping(value = "/api/V1/posts/{id}")
     public ResponseEntity<PostDto> getPostByIdV1(@PathVariable(name = "id") long id){
         return ResponseEntity.ok(postService.getPostById(id));
@@ -68,6 +74,7 @@ public class PostController {
 //        return ResponseEntity.ok(postDtoV2);
 //    }
 
+    @ApiOperation(value = "Update post REST API")
     @PreAuthorize("hasRole('ADMIN')")
     //update post by id rest api
     @PutMapping("/api/V1/posts/{id}")
@@ -78,6 +85,7 @@ public class PostController {
         return new ResponseEntity(postResponse, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Delete post REST API")
     @PreAuthorize("hasRole('ADMIN')")
     //delete post by id
     @DeleteMapping("/api/V1/posts/{id}")
